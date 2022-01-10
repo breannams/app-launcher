@@ -4,7 +4,15 @@ import os
 
 root = tk.Tk()
 apps = []
+
 #functions
+
+if os.path.isfile('save.txt'):
+    with open('save.txt', 'r') as f:
+        tempApps = f.read()
+        tempApps = tempApps.split(',')
+        apps = [x for x in tempApps if x.strip()]
+
 
 def addApp():
     for widget in frame.winfo_children():
@@ -17,6 +25,10 @@ def addApp():
         label = tk.Label(frame, text=app, bg="gray", fg="white")
         label.pack()
 
+def runApps():
+    for app in apps:
+        os.startfile(app)
+
 #canvas styling
 canvas = tk.Canvas(root, height=700, width=700, bg="teal")
 canvas.pack()
@@ -28,11 +40,11 @@ frame.place(relwidth=0.8, relheight=0.8, relx=0.1, rely=0.1)
 openFile = tk.Button(root, text="Open File", padx=10, pady=5, fg="white", bg="teal", command=addApp)
 openFile.pack()
 
-runAllApps = tk.Button(root, text="Run your Apps", padx=10, pady=5, fg="white", bg="teal")
+runAllApps = tk.Button(root, text="Run your Apps", padx=10, pady=5, fg="white", bg="teal", command=runApps)
 runAllApps.pack()
 
 
-
-
 root.mainloop()
+
+
 
